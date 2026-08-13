@@ -21,8 +21,8 @@ public class SellerProfile {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @Column(name = "shop_name", nullable = false)
-    private String shopName;
+    @Column(name = "display_name", nullable = false)
+    private String displayName;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

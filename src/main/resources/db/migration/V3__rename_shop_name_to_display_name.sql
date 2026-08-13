@@ -1,0 +1,1 @@
+ALTER TABLE seller_profiles DROP COLUMN shop_name;

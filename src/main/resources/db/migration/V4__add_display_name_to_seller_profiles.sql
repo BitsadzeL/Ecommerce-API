@@ -1,0 +1,1 @@
+ALTER TABLE seller_profiles ADD COLUMN display_name VARCHAR(255) NOT NULL DEFAULT 'Unnamed Seller';

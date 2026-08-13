@@ -1,6 +1,7 @@
 package com.example.ecommerce.handler;
 
 import com.example.ecommerce.exception.EmailAlreadyExistsException;
+import com.example.ecommerce.exception.SellerProfileAlreadyExistsException;
 import com.example.ecommerce.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +48,14 @@ public class GlobalExceptionHandler {
                 NOT_FOUND,
                 System.currentTimeMillis());
         return new ResponseEntity<>(error, NOT_FOUND);
+    }
+
+    @ExceptionHandler(SellerProfileAlreadyExistsException.class)
+    public ResponseEntity<EntityErrorResponse> sellerProfileAlreadyExists(SellerProfileAlreadyExistsException e) {
+        EntityErrorResponse error = new EntityErrorResponse(
+                e.getMessage(),
+                CONFLICT,
+                System.currentTimeMillis());
+        return new ResponseEntity<>(error, CONFLICT);
     }
 }
