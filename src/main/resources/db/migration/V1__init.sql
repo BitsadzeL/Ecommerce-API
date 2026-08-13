@@ -1,0 +1,1 @@
+-- Initial baseline migration. Tables will be added in Phase 1.
