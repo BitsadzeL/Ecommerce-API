@@ -1,6 +1,7 @@
 package com.example.ecommerce.handler;
 
 import com.example.ecommerce.exception.EmailAlreadyExistsException;
+import com.example.ecommerce.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,8 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -38,5 +38,14 @@ public class GlobalExceptionHandler {
                 CONFLICT,
                 System.currentTimeMillis());
         return new ResponseEntity<>(error, CONFLICT);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<EntityErrorResponse> userNotFound(UserNotFoundException e) {
+        EntityErrorResponse error = new EntityErrorResponse(
+                e.getMessage(),
+                NOT_FOUND,
+                System.currentTimeMillis());
+        return new ResponseEntity<>(error, NOT_FOUND);
     }
 }

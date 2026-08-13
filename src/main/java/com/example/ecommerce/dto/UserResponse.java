@@ -2,7 +2,7 @@ package com.example.ecommerce.dto;
 
 import java.time.Instant;
 
-public record RegisterResponse(
+public record UserResponse(
         Long id,
         String email,
         String phoneNumber,
