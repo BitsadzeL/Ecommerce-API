@@ -1,15 +1,14 @@
 package com.example.ecommerce.handler;
 
-import com.example.ecommerce.exception.EmailAlreadyExistsException;
-import com.example.ecommerce.exception.SellerProfileAlreadyExistsException;
-import com.example.ecommerce.exception.UserNotFoundException;
-import org.springframework.http.HttpStatus;
+import com.example.ecommerce.exception.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,5 +56,32 @@ public class GlobalExceptionHandler {
                 CONFLICT,
                 System.currentTimeMillis());
         return new ResponseEntity<>(error, CONFLICT);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<EntityErrorResponse> productNotFound(ProductNotFoundException e) {
+        EntityErrorResponse error = new EntityErrorResponse(
+                e.getMessage(),
+                NOT_FOUND,
+                System.currentTimeMillis());
+        return new ResponseEntity<>(error, NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotASellerException.class)
+    public ResponseEntity<EntityErrorResponse> notASeller(NotASellerException e) {
+        EntityErrorResponse error = new EntityErrorResponse(
+                e.getMessage(),
+                FORBIDDEN,
+                System.currentTimeMillis());
+        return new ResponseEntity<>(error, FORBIDDEN);
+    }
+
+    @ExceptionHandler(ProductOwnershipException.class)
+    public ResponseEntity<EntityErrorResponse> productOwnership(ProductOwnershipException e) {
+        EntityErrorResponse error = new EntityErrorResponse(
+                e.getMessage(),
+                FORBIDDEN,
+                System.currentTimeMillis());
+        return new ResponseEntity<>(error, FORBIDDEN);
     }
 }
