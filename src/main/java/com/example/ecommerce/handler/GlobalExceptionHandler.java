@@ -84,4 +84,23 @@ public class GlobalExceptionHandler {
                 System.currentTimeMillis());
         return new ResponseEntity<>(error, FORBIDDEN);
     }
+
+
+    @ExceptionHandler(OutOfStockException.class)
+    public ResponseEntity<EntityErrorResponse> insufficientStock(OutOfStockException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), BAD_REQUEST, System.currentTimeMillis());
+        return new ResponseEntity<>(error, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CartItemNotFoundException.class)
+    public ResponseEntity<EntityErrorResponse> cartItemNotFound(CartItemNotFoundException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), NOT_FOUND, System.currentTimeMillis());
+        return new ResponseEntity<>(error, NOT_FOUND);
+    }
+
+    @ExceptionHandler(CartItemOwnershipException.class)
+    public ResponseEntity<EntityErrorResponse> cartItemOwnership(CartItemOwnershipException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), FORBIDDEN, System.currentTimeMillis());
+        return new ResponseEntity<>(error, FORBIDDEN);
+    }
 }
