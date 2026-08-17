@@ -103,4 +103,34 @@ public class GlobalExceptionHandler {
         EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), FORBIDDEN, System.currentTimeMillis());
         return new ResponseEntity<>(error, FORBIDDEN);
     }
+
+    @ExceptionHandler(CartNotFoundException.class)
+    public ResponseEntity<EntityErrorResponse> cartNotFound(CartNotFoundException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), NOT_FOUND, System.currentTimeMillis());
+        return new ResponseEntity<>(error, NOT_FOUND);
+    }
+
+    @ExceptionHandler(EmptyCartException.class)
+    public ResponseEntity<EntityErrorResponse> emptyCart(EmptyCartException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), BAD_REQUEST, System.currentTimeMillis());
+        return new ResponseEntity<>(error, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<EntityErrorResponse> orderNotFound(OrderNotFoundException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), NOT_FOUND, System.currentTimeMillis());
+        return new ResponseEntity<>(error, NOT_FOUND);
+    }
+
+    @ExceptionHandler(OrderOwnershipException.class)
+    public ResponseEntity<EntityErrorResponse> orderOwnership(OrderOwnershipException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), FORBIDDEN, System.currentTimeMillis());
+        return new ResponseEntity<>(error, FORBIDDEN);
+    }
+
+    @ExceptionHandler(InvalidOrderStatusException.class)
+    public ResponseEntity<EntityErrorResponse> invalidOrderStatus(InvalidOrderStatusException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), CONFLICT, System.currentTimeMillis());
+        return new ResponseEntity<>(error, CONFLICT);
+    }
 }
