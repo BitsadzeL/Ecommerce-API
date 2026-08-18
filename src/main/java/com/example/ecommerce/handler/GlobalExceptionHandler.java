@@ -133,4 +133,10 @@ public class GlobalExceptionHandler {
         EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), CONFLICT, System.currentTimeMillis());
         return new ResponseEntity<>(error, CONFLICT);
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<EntityErrorResponse> invalidCredentials(InvalidCredentialsException e) {
+        EntityErrorResponse error = new EntityErrorResponse(e.getMessage(), UNAUTHORIZED, System.currentTimeMillis());
+        return new ResponseEntity<>(error, UNAUTHORIZED);
+    }
 }
