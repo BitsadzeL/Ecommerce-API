@@ -164,7 +164,7 @@ public class OrderService {
     private OrderResponse createOrder(Long customerId, List<OrderCreationLineItem> lineItems) {
 
         Map<Long, Product> productsById = lineItems.stream()
-                .map(li -> productRepository.findById(li.productId())
+                .map(li -> productRepository.findByIdWithLock(li.productId())
                         .orElseThrow(() -> new ProductNotFoundException(
                                 "Product not found: " + li.productId())))
                 .collect(Collectors.toMap(Product::getId, p -> p));
