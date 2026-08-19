@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +22,14 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/checkout")
-    public ResponseEntity<OrderResponse> checkout(@RequestHeader("X-User-Id") Long customerId) {
+    public ResponseEntity<OrderResponse> checkout(@AuthenticationPrincipal Long customerId) {
         OrderResponse response = orderService.checkout(customerId);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/buy-now")
     public ResponseEntity<OrderResponse> buyNow(
-            @RequestHeader("X-User-Id") Long customerId,
+            @AuthenticationPrincipal Long customerId,
             @Valid @RequestBody BuyNowRequest request) {
         OrderResponse response = orderService.buyNow(customerId, request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -36,7 +37,7 @@ public class OrderController {
 
     @PostMapping("/{id}/pay")
     public ResponseEntity<OrderResponse> pay(
-            @RequestHeader("X-User-Id") Long customerId,
+            @AuthenticationPrincipal Long customerId,
             @PathVariable Long id,
             @Valid @RequestBody PayRequest request) {
         OrderResponse response = orderService.pay(customerId, id, request);
@@ -45,14 +46,14 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<OrderSummaryResponse>> getOrders(
-            @RequestHeader("X-User-Id") Long customerId) {
+            @AuthenticationPrincipal Long customerId) {
         List<OrderSummaryResponse> response = orderService.getOrders(customerId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrder(
-            @RequestHeader("X-User-Id") Long customerId,
+            @AuthenticationPrincipal Long customerId,
             @PathVariable Long id) {
         OrderResponse response = orderService.getOrder(customerId, id);
         return new ResponseEntity<>(response, HttpStatus.OK);
