@@ -5,6 +5,7 @@ import com.example.ecommerce.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,13 +31,13 @@ public class ProductController {
 
     @GetMapping("/seller/products")
     public ResponseEntity<List<ProductResponse>> getOwnProducts(
-            @RequestHeader("X-User-Id") Long userId) {
+            @AuthenticationPrincipal Long userId) {
         return ResponseEntity.ok(productService.getOwnProducts(userId));
     }
 
     @PostMapping("/products")
     public ResponseEntity<ProductResponse> createProduct(
-            @RequestHeader("X-User-Id") Long userId,
+            @AuthenticationPrincipal Long userId,
             @Valid @RequestBody CreateProductRequest request) {
         ProductResponse response = productService.createProduct(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -44,7 +45,7 @@ public class ProductController {
 
     @PutMapping("/products/{id}")
     public ResponseEntity<ProductResponse> updateProduct(
-            @RequestHeader("X-User-Id") Long userId,
+            @AuthenticationPrincipal Long userId,
             @PathVariable Long id,
             @Valid @RequestBody UpdateProductRequest request) {
         return ResponseEntity.ok(productService.updateProduct(userId, id, request));
@@ -52,7 +53,7 @@ public class ProductController {
 
     @DeleteMapping("/products/{id}")
     public ResponseEntity<Void> deleteProduct(
-            @RequestHeader("X-User-Id") Long userId,
+            @AuthenticationPrincipal Long userId,
             @PathVariable Long id) {
         productService.deleteProduct(userId, id);
         return ResponseEntity.noContent().build();

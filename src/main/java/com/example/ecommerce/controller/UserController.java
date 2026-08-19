@@ -5,6 +5,7 @@ import com.example.ecommerce.dto.UserResponse;
 import com.example.ecommerce.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +20,7 @@ public class UserController {
 
     @PatchMapping("/me")
     public ResponseEntity<UserResponse> updatePhoneNumber(
-            @RequestHeader("X-User-Id") Long userId,
+            @AuthenticationPrincipal Long userId,
             @Valid @RequestBody UpdatePhoneNumberRequest request) {
         return ResponseEntity.ok(userService.updatePhoneNumber(userId, request));
     }

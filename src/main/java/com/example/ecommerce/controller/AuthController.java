@@ -1,5 +1,7 @@
 package com.example.ecommerce.controller;
 
+import com.example.ecommerce.dto.LoginRequest;
+import com.example.ecommerce.dto.LoginResponse;
 import com.example.ecommerce.dto.RegisterRequest;
 import com.example.ecommerce.dto.UserResponse;
 import com.example.ecommerce.service.UserService;
@@ -22,5 +24,11 @@ public class AuthController {
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
         UserResponse response = userService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = userService.login(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

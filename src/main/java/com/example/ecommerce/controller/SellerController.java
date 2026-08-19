@@ -8,6 +8,7 @@ import com.example.ecommerce.service.SellerProfileService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class SellerController {
 
     @PostMapping("/profile")
     public ResponseEntity<SellerProfileResponse> becomeSeller(
-            @RequestHeader("X-User-Id") Long userId,
+            @AuthenticationPrincipal Long userId,
             @Valid @RequestBody BecomeSellerRequest request) {
         SellerProfileResponse response = sellerProfileService.becomeSeller(userId,request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -34,7 +35,7 @@ public class SellerController {
 
     @GetMapping("/orders")
     public ResponseEntity<List<SellerOrderResponse>> getSellerOrders(
-            @RequestHeader("X-User-Id") Long userId) {
+            @AuthenticationPrincipal Long userId) {
         List<SellerOrderResponse> response = orderService.getSellerOrders(userId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
